@@ -1,5 +1,5 @@
 # Fork notes:
-This fork is a quick and dirty experiment which proves that the model in the paper can be trained in an unsupervised way. All main scripts other than the newly created reinforcement_learning.py are probably broken and no longer working.
+This fork is a quick and dirty experiment proving that the model in the paper can be trained in an unsupervised way. All main scripts other than the newly created reinforcement_learning.py are probably broken and no longer working.
 
 # Deep Policy Dynamic Programming for Vehicle Routing Problems
 This repository contains code for [Deep Policy Dynamic Programming](https://arxiv.org/abs/2102.11756) by Wouter Kool, Herke van Hoof, Joaquim Gromicho and Max Welling.
