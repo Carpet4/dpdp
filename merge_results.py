@@ -2,7 +2,7 @@ import os
 import argparse
 from utils.data_utils import load_dataset, save_dataset
 from utils.functions import ensure_backward_compatibility
-from eval import print_statistics
+from utils.eval import print_statistics
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -8,10 +8,10 @@ from tqdm import tqdm
 from problems import load_problem
 from utils.data_utils import save_dataset, load_heatmaps
 from utils.functions import move_to, get_durations, compute_batch_costs, accurate_cdist
+from utils.heatmap_dataset import HeatmapDataset
 from torch.utils.data import DataLoader
 import time
 from dp import BatchGraph, StreamingTopK, SimpleBatchTopK, run_dp
-from torch.utils.data import Dataset
 
 # Fix according to https://discuss.pytorch.org/t/
 # a-call-to-torch-cuda-is-available-makes-an-unrelated-multi-processing-computation-crash/4075/4
@@ -70,25 +70,6 @@ def evaluate_dp(is_vrp, has_tw, batch, heatmaps, beam_size, collapse, score_func
     solutions_np = [sol.cpu().numpy() if sol is not None else None for sol in solution]
     cost = graph.dequantize_cost(mincost_dp_qt)
     return solutions_np, cost, graph.batch_size
-
-
-class HeatmapDataset(Dataset):
-
-    def __init__(self, dataset=None, heatmaps=None):
-        super(HeatmapDataset, self).__init__()
-
-        self.dataset = dataset
-        self.heatmaps = heatmaps
-        assert (len(self.dataset) == len(self.heatmaps)), f"Found {len(self.dataset)} instances but {len(self.heatmaps)} heatmaps"
-
-    def __getitem__(self, item):
-        return {
-            'data': self.dataset[item],
-            'heatmap': self.heatmaps[item]
-        }
-
-    def __len__(self):
-        return len(self.dataset)
 
 
 def unpack_heatmaps(batch):

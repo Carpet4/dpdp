@@ -20,7 +20,7 @@ class TSPReader(object):
     Format as used in https://github.com/wouterkool/attention-learn-to-route
     """
 
-    def __init__(self, num_nodes, num_neighbors, batch_size, filepath, target_filepath=None, do_shuffle=False, do_prep=True):
+    def __init__(self, num_nodes, num_neighbors, batch_size, filepath, target_filepath=None, do_shuffle=False, do_prep=True, raw_dataset=None, solutions=None):
         """
         Args:
             num_nodes: Number of nodes in TSP tours
@@ -32,13 +32,16 @@ class TSPReader(object):
         self.num_neighbors = num_neighbors
         self.batch_size = batch_size
         self.filepath = filepath
-        filedata = load_dataset(filepath)  # open(filepath, "r").readlines()
+        filedata = load_dataset(filepath) if filepath is not None else raw_dataset # open(filepath, "r").readlines()
 
         self.target_filepath = target_filepath
         if target_filepath is not None:
             self.has_target = True
             target_filedata, parallelism = load_dataset(target_filepath)
             self.filedata = list([(inst, sol) for inst, sol in zip(filedata, target_filedata) if sol is not None])
+        elif solutions is not None:
+            self.has_target = True
+            self.filedata = list([(inst, sol) for inst, sol in zip(filedata, solutions) if sol is not None])
         else:
             self.has_target = False
             self.filedata = list([(inst, None) for inst in filedata])

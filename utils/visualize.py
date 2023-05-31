@@ -168,6 +168,19 @@ def plot(ax1, loc, depot=None, demand=None, capacity=None, timew=None, solution=
                 label=label,
             )
 
+            # From last to first
+            qv = ax1.quiver(
+                [xs[-1]],
+                [ys[-1]],
+                xs[0] - xs[-1],
+                ys[0] - ys[-1],
+                scale_units='xy',
+                angles='xy',
+                scale=1,
+                color=color,
+                label=label,
+            )
+
             qvs.append(qv)
         title_makespan = ", makespan {:.2f}".format(current_time) if timew is not None else ""
         if demand is None:

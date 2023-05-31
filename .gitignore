@@ -7,3 +7,5 @@ __pycache__/
 */.ipynb_checkpoints
 *.log
 *.bak
+tests/
+.vscode

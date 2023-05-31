@@ -21,7 +21,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 from scipy.sparse import SparseEfficiencyWarning
 warnings.simplefilter('ignore', SparseEfficiencyWarning)
 
-from config import *
+from utils.config import *
 from problems.vrp.vrp_reader import VRPReader
 from models.gcn_model_vrp import ResidualGatedGCNModelVRP
 

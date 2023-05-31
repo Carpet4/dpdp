@@ -4,6 +4,8 @@ import numpy as np
 from scipy.spatial.distance import pdist, cdist, squareform
 from sklearn.utils import shuffle
 from utils.data_utils import load_dataset
+from copy import deepcopy
+
 
 class DotDict(dict):
     """Wrapper around in-built dict class to access members through the dot operation.
@@ -18,7 +20,7 @@ class TSPTWReader(object):
     """Iterator that reads TSPTW dataset files and yields mini-batches.
     """
 
-    def __init__(self, num_nodes, num_neighbors, batch_size, filepath, target_filepath=None, do_shuffle=False, do_prep=False):
+    def __init__(self, num_nodes, num_neighbors, batch_size, filepath=None, target_filepath=None, do_shuffle=False, do_prep=False, raw_dataset=None):
         assert not do_prep, "TSPTWReader does not prepare data, use PrepWrapper"
         """
         Args:
@@ -30,8 +32,12 @@ class TSPTWReader(object):
         self.num_nodes = num_nodes
         self.num_neighbors = num_neighbors
         self.batch_size = batch_size
-        self.filepath = filepath
-        filedata = load_dataset(filepath)  # open(filepath, "r").readlines()
+
+        if filepath is not None:
+            self.filepath = filepath
+            filedata = load_dataset(filepath)  # open(filepath, "r").readlines()
+        else:
+            filedata = deepcopy(raw_dataset)
 
         self.target_filepath = target_filepath
         if target_filepath is not None:
